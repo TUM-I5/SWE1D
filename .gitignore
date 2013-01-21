@@ -1,0 +1,11 @@
+# Builds
+build/
+
+# Eclipse files/folders
+.cproject
+.project
+.pydevproject
+.settings
+
+# Scons database
+.sconsign.dblite
