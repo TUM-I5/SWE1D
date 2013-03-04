@@ -71,7 +71,7 @@ public:
 		};
 
 		int c, optionIndex;
-		std::stringstream ss;
+		std::istringstream ss;
 		while ((c = getopt_long(argc, argv, "s:t:h",
 			longOptions, &optionIndex)) >= 0) {
 			switch (c) {
@@ -79,12 +79,16 @@ public:
 				tools::Logger::logger.error("Could not parse command line arguments");
 				break;
 			case 's':
+				ss.clear();
 				ss.str(optarg);
 				ss >> m_size;
+				std::cout << m_size << std::endl;
 				break;
 			case 't':
+				ss.clear();
 				ss.str(optarg);
 				ss >> m_timeSteps;
+				std::cout << m_timeSteps << std::endl;
 				break;
 			case 'h':
 				printHelpMessage();
