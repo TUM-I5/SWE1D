@@ -65,7 +65,7 @@ public:
 	}
 
 	/**
-	 * Writes all values (without boundary values) to the ostream
+	 * Writes all values to vtk file
 	 *
 	 * @param size Number of cells (without boundary values)
 	 */
