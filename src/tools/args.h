@@ -105,7 +105,7 @@ public:
 		return m_size;
 	}
 
-	float timeSteps()
+	unsigned int timeSteps()
 	{
 		return m_timeSteps;
 	}

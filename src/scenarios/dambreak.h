@@ -37,6 +37,8 @@
 #ifndef SCENARIOS_DAMBREAK_H_
 #define SCENARIOS_DAMBREAK_H_
 
+#include "types.h"
+
 namespace scenarios
 {
 
@@ -66,7 +68,7 @@ public:
 	/**
 	 * @return Cell size of one cell (= domain size/number of cells)
 	 */
-	float getCellSize()
+	T getCellSize()
 	{
 		return 1000.f / m_size;
 	}

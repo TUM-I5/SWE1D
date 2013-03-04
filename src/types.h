@@ -29,75 +29,17 @@
  *
  *  Sie sollten eine Kopie der GNU General Public License zusammen mit diesem
  *  Programm erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
- * 
+ *
  * @copyright 2013 Technische Universitaet Muenchen
  * @author Sebastian Rettenberger <rettenbs@in.tum.de>
  */
 
-#include "types.h"
-#include "WavePropagation.h"
-#include "scenarios/dambreak.h"
-#include "writer/ConsoleWriter.h"
-#include "tools/args.h"
+#ifndef TYPES_H_
+#define TYPES_H_
 
-#include <cstring>
 
-int main(int argc, char** argv)
-{
-	// Parse command line parameters
-	tools::Args args(argc, argv);
+// Switch precision here
+typedef float T;
+//typedef double T;
 
-	// Scenario
-	scenarios::DamBreak scenario(args.size());
-
-	// Allocate memory
-	// Water height
-	T *h = new T[args.size()+2];
-	// Momentum
-	T *hu = new T[args.size()+2];
-
-	// Initialize water height and momentum
-	for (unsigned int i = 0; i < args.size()+2; i++)
-		h[i] = scenario.getHeight(i);
-	memset(hu, 0, sizeof(T)*(args.size()+2));
-
-	// Create a writer that is responsible printing out values
-	writer::ConsoleWriter writer;
-
-	// Helper class computing the wave propagation
-	WavePropagation wavePropagation(h, hu, args.size(), scenario.getCellSize());
-
-	// Write initial data
-	tools::Logger::logger.info("Initial data");
-	writer.write(h, hu, args.size());
-
-	// Current time of simulation
-	T t = 0;
-
-	for (unsigned int i = 0; i < args.timeSteps(); i++) {
-		// Do one time step
-		tools::Logger::logger << "Computing timestep " << i
-				<< " at time " << t << std::endl;
-
-		// Update boundaries
-		wavePropagation.setOutflowBoundaryConditions();
-
-		// Compute numerical flux on each edge
-		T maxTimeStep = wavePropagation.computeNumericalFluxes();
-
-		// Update unknowns from net updates
-		wavePropagation.updateUnknowns(maxTimeStep);
-
-		// Update time
-		t += maxTimeStep;
-
-		// Write new values
-		writer.write(h, hu, args.size());
-	}
-
-	// Free allocated memory
-	delete [] h;
-	delete [] hu;
-
-	return 0;
-}
+#endif /* TYPES_H_ */

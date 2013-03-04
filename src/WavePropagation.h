@@ -37,6 +37,8 @@
 #ifndef WAVEPROPAGATION_H_
 #define WAVEPROPAGATION_H_
 
+#include "types.h"
+
 // Include the solver that is currently used
 #define SUPPRESS_SOLVER_DEBUG_OUTPUT
 #include "solvers/FWave.hpp"
@@ -71,38 +73,38 @@
 class WavePropagation
 {
 private:
-	float *m_h;
-	float *m_hu;
+	T *m_h;
+	T *m_hu;
 
-	float *m_hNetUpdatesLeft;
-	float *m_hNetUpdatesRight;
+	T *m_hNetUpdatesLeft;
+	T *m_hNetUpdatesRight;
 
-	float *m_huNetUpdatesLeft;
-	float *m_huNetUpdatesRight;
+	T *m_huNetUpdatesLeft;
+	T *m_huNetUpdatesRight;
 
 	unsigned int m_size;
 
-	float m_cellSize;
+	T m_cellSize;
 
 	/** The solver used in computeNumericalFluxes */
-	solver::FWave<float> m_solver;
+	solver::FWave<T> m_solver;
 
 public:
 	/**
 	 * @param size Domain size (= number of cells) without ghost cells
 	 * @param cellSize Size of one cell
 	 */
-	WavePropagation(float *h, float *hu, unsigned int size, float cellSize)
+	WavePropagation(T *h, T *hu, unsigned int size, T cellSize)
 		: m_h(h),
 		  m_hu(hu),
 		  m_size(size),
 		  m_cellSize(cellSize)
 	{
 		// Allocate net updates
-		m_hNetUpdatesLeft = new float[size+1];
-		m_hNetUpdatesRight = new float[size+1];
-		m_huNetUpdatesLeft = new float[size+1];
-		m_huNetUpdatesRight = new float[size+1];
+		m_hNetUpdatesLeft = new T[size+1];
+		m_hNetUpdatesRight = new T[size+1];
+		m_huNetUpdatesLeft = new T[size+1];
+		m_huNetUpdatesRight = new T[size+1];
 	}
 
 	~WavePropagation()
@@ -116,15 +118,17 @@ public:
 
 	/**
 	 * Computes the net-updates from the unknowns
+	 *
+	 * @return The maximum possible time step
 	 */
-	float computeNumericalFluxes();
+	T computeNumericalFluxes();
 
 	/**
 	 * Update the unknowns with the already computed net-updates
 	 *
 	 * @param dt Time step size
 	 */
-	void updateUnknowns(float dt);
+	void updateUnknowns(T dt);
 
 	/**
 	 * Updates h and hu according to the outflow condition to both

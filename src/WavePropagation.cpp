@@ -36,13 +36,13 @@
 
 #include "WavePropagation.h"
 
-float WavePropagation::computeNumericalFluxes()
+T WavePropagation::computeNumericalFluxes()
 {
 	float maxWaveSpeed = 0.f;
 
 	// Loop over all edges
 	for (unsigned int i = 1; i < m_size+2; i++) {
-		float maxEdgeSpeed;
+		T maxEdgeSpeed;
 
 		// Compute net updates
 		m_solver.computeNetUpdates( m_h[i-1], m_h[i],
@@ -58,12 +58,12 @@ float WavePropagation::computeNumericalFluxes()
 	}
 
 	// Compute CFL condition
-	float maxTimeStep = m_cellSize/maxWaveSpeed * .4f;
+	T maxTimeStep = m_cellSize/maxWaveSpeed * .4f;
 
 	return maxTimeStep;
 }
 
-void WavePropagation::updateUnknowns(float dt)
+void WavePropagation::updateUnknowns(T dt)
 {
 	// Loop over all inner cells
 	for (unsigned int i = 1; i < m_size+1; i++) {

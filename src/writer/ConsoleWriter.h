@@ -37,6 +37,8 @@
 #ifndef CONSOLEWRITER_H_
 #define CONSOLEWRITER_H_
 
+#include "types.h"
+
 #include <iostream>
 
 namespace writer
@@ -61,7 +63,7 @@ public:
 	 *
 	 * @param size Number of cells (without boundary values)
 	 */
-	void write(const float *h, const float *hu, unsigned int size)
+	void write(const T *h, const T *hu, unsigned int size)
 	{
 		for (unsigned int i=1; i < size+1; i++) {
 			m_ostream << h[i] << ' ';
