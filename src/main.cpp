@@ -37,7 +37,8 @@
 #include "types.h"
 #include "WavePropagation.h"
 #include "scenarios/dambreak.h"
-#include "writer/ConsoleWriter.h"
+//#include "writer/ConsoleWriter.h"
+#include "writer/VtkWriter.h"
 #include "tools/args.h"
 
 #include <cstring>
@@ -62,7 +63,8 @@ int main(int argc, char** argv)
 	memset(hu, 0, sizeof(T)*(args.size()+2));
 
 	// Create a writer that is responsible printing out values
-	writer::ConsoleWriter writer;
+	//writer::ConsoleWriter writer;
+	writer::VtkWriter writer;
 
 	// Helper class computing the wave propagation
 	WavePropagation wavePropagation(h, hu, args.size(), scenario.getCellSize());
