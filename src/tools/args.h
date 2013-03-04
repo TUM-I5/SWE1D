@@ -71,7 +71,7 @@ public:
 
 		int c, optionIndex;
 		std::stringstream ss;
-		while ((c = getopt_long(argc, argv, "s:h",
+		while ((c = getopt_long(argc, argv, "s:t:h",
 			longOptions, &optionIndex)) >= 0) {
 			switch (c) {
 			case 0:
