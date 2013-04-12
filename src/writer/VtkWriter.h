@@ -104,15 +104,15 @@ public:
 		vtkFile << "<CellData>" << std::endl;
 
 		// Water surface height
-		vtkFile << "<DataArray Name=\"H\" type=\"Float32\" format=\"ascii\">" << std::endl;
+		vtkFile << "<DataArray Name=\"h\" type=\"Float32\" format=\"ascii\">" << std::endl;
 		for (int i=1; i < size+1; i++)
 				vtkFile << h[i] << std::endl;
 		vtkFile << "</DataArray>" << std::endl;
 
 		// Velocity
-		vtkFile << "<DataArray Name=\"U\" type=\"Float32\" format=\"ascii\">" << std::endl;
+		vtkFile << "<DataArray Name=\"hu\" type=\"Float32\" format=\"ascii\">" << std::endl;
 		for (int i=1; i < size+1; i++)
-			vtkFile << (h[i] > 0 ? hu[i]/h[i] : 0.0) << std::endl;
+			vtkFile << hu[i] << std::endl;
 		vtkFile << "</DataArray>" << std::endl;
 
 		// Bathymetry
