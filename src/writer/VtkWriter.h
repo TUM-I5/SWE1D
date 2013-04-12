@@ -53,15 +53,47 @@ namespace writer
 class VtkWriter
 {
 private:
+	// base name of the vtp collectiond and vtk files
 	std::string m_basename;
 
+	// cell size
+	T m_cellSize;
+
+	// current time step
 	unsigned int m_timeStep;
 
+	// vtp stream
+	std::ofstream *m_vtpFile;
+
+
 public:
-	VtkWriter(const std::string& basename = "swe1d")
+	// constructor
+	VtkWriter( const std::string& basename = "swe1d", const T cellSize = 1)
 		: m_basename(basename),
+                  m_cellSize(cellSize),
 		  m_timeStep(0)
 	{
+		// initialize vtp stream
+		std::ostringstream l_vtpFileName;
+		l_vtpFileName << m_basename << ".vtp";
+
+		m_vtpFile = new std::ofstream( l_vtpFileName.str().c_str() );
+
+		// write vtp header
+                *m_vtpFile
+			<< "<?xml version=\"1.0\"?>" << std::endl
+			<< "<VTKFile type=\"Collection\" version=\"0.1\">" << std::endl
+  			<< "<Collection>" << std::endl;
+
+	}
+
+	// destructor (free memory)
+	~VtkWriter() {
+		// close vtp file
+                *m_vtpFile
+			<< "</Collection>" << std::endl
+			<< "</VTKFile>" << std::endl;
+		delete m_vtpFile;	
 	}
 
 	/**
@@ -69,12 +101,23 @@ public:
 	 *
 	 * @param size Number of cells (without boundary values)
 	 */
-	void write(const T *h, const T *hu, unsigned int size)
+	void write(const T time, const T *h, const T *hu, unsigned int size)
 	{
-		std::ofstream vtkFile(generateFileName().c_str());
+		// generate vtk file name
+		std::string l_fileName = generateFileName();
+
+		// add current time to vtp collection
+		*m_vtpFile << "<DataSet timestep=\""
+                           << time
+                           << "0\" group=\"\" part=\"0\" file=\""
+                           << l_fileName
+                           << "\"/> " << std::endl;
+
+		// write vtk file
+		std::ofstream vtkFile(l_fileName.c_str());
 		assert(vtkFile.good());
 
-		// VTK HEADER
+		// vtk xml header
 		vtkFile << "<?xml version=\"1.0\"?>" << std::endl
 				<< "<VTKFile type=\"RectilinearGrid\">" << std::endl
 				<< "<RectilinearGrid WholeExtent=\"0 " << size
@@ -83,11 +126,11 @@ public:
 		        	<< " 0 0 0 0\">" << std::endl;
 
 		vtkFile << "<Coordinates>" << std::endl
-				<< "<DataArray type=\"Float32\" format=\"ascii\">" << std::endl;
+			<< "<DataArray type=\"Float32\" format=\"ascii\">" << std::endl;
 
-		//GITTER PUNKTE
+		// grid points
 		for (int i=0; i < size+1; i++)
-			vtkFile << i << "" << std::endl;
+			vtkFile << m_cellSize * i << "" << std::endl;
 
 		vtkFile << "</DataArray>" << std::endl;
 
@@ -103,19 +146,19 @@ public:
 
 		vtkFile << "<CellData>" << std::endl;
 
-		// Water surface height
+		// water surface height
 		vtkFile << "<DataArray Name=\"h\" type=\"Float32\" format=\"ascii\">" << std::endl;
 		for (int i=1; i < size+1; i++)
 				vtkFile << h[i] << std::endl;
 		vtkFile << "</DataArray>" << std::endl;
 
-		// Velocity
+		// momentum
 		vtkFile << "<DataArray Name=\"hu\" type=\"Float32\" format=\"ascii\">" << std::endl;
 		for (int i=1; i < size+1; i++)
 			vtkFile << hu[i] << std::endl;
 		vtkFile << "</DataArray>" << std::endl;
 
-		// Bathymetry
+		// bathymetry
 		//vtkFile << "<DataArray Name=\"B\" type=\"Float32\" format=\"ascii\">" << std::endl;
 		//for (int i=1; i<size+1; i++)
 		//		vtkFile << b[i] << std::endl;
@@ -127,7 +170,7 @@ public:
 		vtkFile << "</RectilinearGrid>" << std::endl
 				<< "</VTKFile>" << std::endl;
 
-		// Increament time step
+		// increment time step
 		m_timeStep++;
 	}
 
