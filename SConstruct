@@ -34,20 +34,20 @@
 # @copyright 2013 Technische Universitaet Muenchen
 # @author Sebastian Rettenberger <rettenbs@in.tum.de>
 
-print '******************************************'
-print '** Welcome to the build script of SWE1D **'
-print '******************************************'
-print 'SWE1D Copyright (C) 2013'
-print ''
-print '  Technische Universitaet Muenchen'
-print '  Department of Informatics'
-print '  Chair of Scientific Computing'
-print ''
-print 'SWE1D comes with ABSOLUTELY NO WARRANTY.'
-print 'SWE1D is free software, and you are welcome to redistribute it'
-print 'under certain conditions.'
-print 'Details can be found in the file \'gpl.txt\'.'
-print ''
+print('******************************************')
+print('** Welcome to the build script of SWE1D **')
+print('******************************************')
+print('SWE1D Copyright (C) 2013')
+print('')
+print('  Technische Universitaet Muenchen')
+print('  Department of Informatics')
+print('  Chair of Scientific Computing')
+print('')
+print('SWE1D comes with ABSOLUTELY NO WARRANTY.')
+print('SWE1D is free software, and you are welcome to redistribute it')
+print('under certain conditions.')
+print('Details can be found in the file \'gpl.txt\'.')
+print('')
 
 import os
 
