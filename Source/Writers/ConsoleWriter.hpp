@@ -34,12 +34,31 @@
  * @author Sebastian Rettenberger <rettenbs@in.tum.de>
  */
 
-#ifndef TYPES_H_
-#define TYPES_H_
+#pragma once
 
+#include <iostream>
 
-// Switch precision here
-typedef float T;
-//typedef double T;
+#include "Tools/RealType.hpp"
 
-#endif /* TYPES_H_ */
+namespace Writers {
+
+  /**
+   * A simple writer class, that writes h and hu to stdout (or another ostream)
+   */
+  class ConsoleWriter {
+  private:
+    std::ostream& ostream_;
+
+  public:
+    ConsoleWriter(std::ostream& ostream = std::cout);
+    ~ConsoleWriter() = default;
+
+    /**
+     * Writes all values (without boundary values) to the ostream
+     *
+     * @param size Number of cells (without boundary values)
+     */
+    void write(const RealType* h, const RealType* hu, unsigned int size);
+  };
+
+} // namespace Writers

@@ -34,6 +34,64 @@
  * @author Sebastian Rettenberger <rettenbs@in.tum.de>
  */
 
-#include "logger.h"
+#include "Args.hpp"
 
-tools::Logger tools::Logger::logger;
+#include <getopt.h>
+
+#include "Logger.hpp"
+
+Tools::Args::Args(int argc, char** argv):
+  size_(100),
+  timeSteps_(20.0) {
+
+  const struct option longOptions[] = {
+    {"size", required_argument, 0, 's'},
+    {"time", required_argument, 0, 't'},
+    {"help", no_argument, 0, 'h'},
+    {0, 0, 0, 0}};
+
+  int                c, optionIndex;
+  std::istringstream ss;
+  while ((c = getopt_long(argc, argv, "s:t:h", longOptions, &optionIndex)) >= 0) {
+    switch (c) {
+    case 0:
+      Logger::logger.error("Could not parse command line arguments");
+      break;
+    case 's':
+      ss.clear();
+      ss.str(optarg);
+      ss >> size_;
+      std::cout << size_ << std::endl;
+      break;
+    case 't':
+      ss.clear();
+      ss.str(optarg);
+      ss >> timeSteps_;
+      std::cout << timeSteps_ << std::endl;
+      break;
+    case 'h':
+      printHelpMessage();
+      exit(0);
+      break;
+    case '?':
+      printHelpMessage(std::cerr);
+      abort();
+      break;
+    default:
+      Logger::logger.error("Could not parse command line arguments");
+      break;
+    }
+  }
+}
+
+unsigned int Tools::Args::getSize() { return size_; }
+
+unsigned int Tools::Args::getTimeSteps() { return timeSteps_; }
+
+void Tools::Args::printHelpMessage(std::ostream& out) {
+  out
+    << "Usage: SWE1D [OPTIONS...]" << std::endl
+    << "  -s, --size=SIZE              domain size" << std::endl
+    << "  -t, --time=TIME              number of simulated time steps" << std::endl
+    << "  -h, --help                   this help message" << std::endl;
+}

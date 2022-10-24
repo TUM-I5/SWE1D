@@ -34,6 +34,52 @@
  * @author Sebastian Rettenberger <rettenbs@in.tum.de>
  */
 
-#include "args.h"
+#include "Logger.hpp"
 
+Tools::Logger Tools::Logger::logger;
 
+Tools::Logger::Logger():
+  output_(&std::cout) {}
+
+void Tools::Logger::setOutputStream(std::ostream& output) { output_ = &output; }
+
+void Tools::Logger::log(std::string& message, Level level) { log(message.c_str(), level); }
+
+void Tools::Logger::log(const char* message, Level level) {
+  switch (level) {
+  case INFO:
+    info(message);
+    break;
+  case WARNING:
+    warning(message);
+    break;
+  case ERROR:
+    error(message);
+    break;
+  }
+}
+
+void Tools::Logger::info(std::string& message) { info(message.c_str()); }
+
+void Tools::Logger::info(const char* message) { *output_ << message << std::endl; }
+
+std::ostream& Tools::Logger::info() { return *output_; }
+
+void Tools::Logger::warning(std::string& message) { warning(message.c_str()); }
+
+void Tools::Logger::warning(const char* message) { *output_ << "Warning: " << message << std::endl; }
+
+std::ostream& Tools::Logger::warning() { return *output_ << "Warning: "; }
+
+void Tools::Logger::error(std::string& message) { error(message.c_str()); }
+
+void Tools::Logger::error(const char* message) {
+  // Error messages are always send to std::cerr
+  std::cerr << "Error: " << message << std::endl;
+  exit(1);
+}
+
+Tools::Logger& Tools::Logger::operator<<(std::ostream& (*func)(std::ostream&)) {
+  *output_ << func;
+  return *this;
+}

@@ -29,53 +29,22 @@
  *
  *  Sie sollten eine Kopie der GNU General Public License zusammen mit diesem
  *  Programm erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
- * 
+ *
  * @copyright 2013 Technische Universitaet Muenchen
  * @author Sebastian Rettenberger <rettenbs@in.tum.de>
  */
 
-#ifndef CONSOLEWRITER_H_
-#define CONSOLEWRITER_H_
+#include "DamBreakScenario.hpp"
 
-#include "types.h"
+Scenarios::DamBreakScenario::DamBreakScenario(unsigned int size):
+  size_(size) {}
 
-#include <iostream>
+RealType Scenarios::DamBreakScenario::getCellSize() const { return RealType(1000) / size_; }
 
-namespace writer
-{
+unsigned int Scenarios::DamBreakScenario::getHeight(unsigned int pos) const {
+  if (pos <= size_ / 2) {
+    return 15;
+  }
 
-/**
- * A simple writer class, that writes h and hu to stdout (or another ostream)
- */
-class ConsoleWriter
-{
-private:
-	std::ostream &m_ostream;
-
-public:
-	ConsoleWriter(std::ostream &ostream = std::cout)
-		: m_ostream(ostream)
-	{
-	}
-
-	/**
-	 * Writes all values (without boundary values) to the ostream
-	 *
-	 * @param size Number of cells (without boundary values)
-	 */
-	void write(const T *h, const T *hu, unsigned int size)
-	{
-		for (unsigned int i=1; i < size+1; i++) {
-			m_ostream << h[i] << ' ';
-		}
-		m_ostream << '\n';	// do not flush the buffer here (do not use std::endl)
-		for (unsigned int i=1; i < size+1; i++) {
-			m_ostream << hu[i] << ' ';
-		}
-		m_ostream << std::endl;
-	}
-};
-
+  return 10;
 }
-
-#endif /* CONSOLEWRITER_H_ */

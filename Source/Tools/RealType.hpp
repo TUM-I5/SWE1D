@@ -29,51 +29,16 @@
  *
  *  Sie sollten eine Kopie der GNU General Public License zusammen mit diesem
  *  Programm erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
- * 
+ *
  * @copyright 2013 Technische Universitaet Muenchen
  * @author Sebastian Rettenberger <rettenbs@in.tum.de>
  */
 
-#ifndef SCENARIOS_DAMBREAK_H_
-#define SCENARIOS_DAMBREAK_H_
+#pragma once
 
-#include "types.h"
-
-namespace scenarios
-{
-
-class DamBreak
-{
-private:
-	/** Number of cells */
-	const unsigned int m_size;
-
-public:
-	DamBreak(unsigned int size)
-		: m_size(size)
-	{
-	}
-
-	/**
-	 * @return Initial water height at pos
-	 */
-	unsigned int getHeight(unsigned int pos)
-	{
-		if (pos <= m_size/2)
-			return 15;
-
-		return 10;
-	}
-
-	/**
-	 * @return Cell size of one cell (= domain size/number of cells)
-	 */
-	T getCellSize()
-	{
-		return 1000.f / m_size;
-	}
-};
-
-}
-
-#endif /* SCENARIOS_DAMBREAK_H_ */
+// Datatype for the type of data stored in the structures
+#ifdef ENABLE_SINGLE_PRECISION
+using RealType = float;
+#else
+using RealType = double;
+#endif
