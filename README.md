@@ -16,12 +16,13 @@ For a short introduction on how to generate, build and run a Docker container, r
 ### Compilation
 As build system configurator we use CMake. To compile the code execute the following commands in this directory:
 
-* Create a build directory: `mkdir build`
+* Create a build directory: `mkdir build`. You can also choose any other name for your build directory.
 * Switch to this directory: `cd build`
 * (Optional): Choose the compiler being used (if you want to use a specific MPI compiler/version): `export CXX=mpic++`
 * Run CMake: `cmake ..` (this configures a `RelWithDebInfo` build, which is default. For a `Debug` build, run `cmake .. -DCMAKE_BUILD_TYPE=Debug`) and for a `Release` build, `cmake .. -DCMAKE_BUILD_TYPE=Release`. This is especially recommended in production and benchmark runs.
 * For developing, consider `cmake .. -DENABLE_DEVELOPER_MODE=ON`. For an overview of all availble options, use `ccmake ..`
 * Run Make: `make` (or `make -j` for compiling with multiple cores)
+* Run `make help` to see all available targets to build.
 
 ### Running a Simulation
 * Run the code in serial via `./SWE1D`
@@ -29,6 +30,12 @@ As build system configurator we use CMake. To compile the code execute the follo
 
 ### Adding new source files
 You can add new source files by just creating them somewhere within the `Source` folder. CMake automatically detects these files and adds them to the build.
+
+### Creating a Doxygen documentation
+* Run the following CMake command: `cmake .. -DENABLE_DEVELOPER_MODE=ON -DOPT_ENABLE_DOXYGEN=ON`
+* `make doxygen-docs`
+* You should now see in your build directory a folder called `html`
+* Open `index.html` to see the generated documentation.
 
 ## Development Hints & FAQ
 ### It does not compile and everything seems fine?
