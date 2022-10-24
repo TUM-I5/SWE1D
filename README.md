@@ -25,11 +25,14 @@ As build system configurator we use CMake. To compile the code execute the follo
 * Run `make help` to see all available targets to build.
 
 ### Running a Simulation
-* Run the code in serial via `./SWE1D`
-* With `./SWE1D --help`, you can see additional command-line arguments you can pass.
+* Run the code in serial via `./SWE1D-Runner`
+* With `./SWE1D-Runner --help`, you can see additional command-line arguments you can pass.
 
 ### Adding new source files
 You can add new source files by just creating them somewhere within the `Source` folder. CMake automatically detects these files and adds them to the build.
+
+### Testing
+Some basic unit tests have been implemented (`make test`). Feel free to add your own test cases inside the `Tests` folder.
 
 ### Creating a Doxygen documentation
 * Run the following CMake command: `cmake .. -DENABLE_DEVELOPER_MODE=ON -DOPT_ENABLE_DOXYGEN=ON`
@@ -45,3 +48,6 @@ Sometimes it is also helpful to delete the `build` folder and create a new one, 
 
 ### How can I see all the compiler flags the generated Makefile is using?
 Instead of using `make`, run `VERBOSE=1 make`. You can also run `make -n` to invoke a dry run where you see what the Makefile would do in case of compilation.
+
+### How can I see the test output?
+Instead of using `make test`, run `ctest --verbose`.

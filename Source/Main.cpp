@@ -76,7 +76,7 @@ int main(int argc, char** argv) {
   // Current time of simulation
   double t = 0;
 
-  //consoleWriter.write(h, hu, args.getSize());
+  // consoleWriter.write(h, hu, args.getSize());
   vtkWriter.write(t, h, hu, args.getSize());
 
   for (unsigned int i = 0; i < args.getTimeSteps(); i++) {
@@ -91,13 +91,14 @@ int main(int argc, char** argv) {
     // Update unknowns from net updates
     wavePropagation.updateUnknowns(maxTimeStep);
 
-    Tools::Logger::logger << "Computing iteration " << i << " at time " << t << " with max. timestep " << maxTimeStep << std::endl;
+    Tools::Logger::logger
+      << "Computing iteration " << i << " at time " << t << " with max. timestep " << maxTimeStep << std::endl;
 
     // Update time
     t += maxTimeStep;
 
     // Write new values
-    //consoleWriter.write(h, hu, args.getSize());
+    // consoleWriter.write(h, hu, args.getSize());
     vtkWriter.write(t, h, hu, args.getSize());
   }
 

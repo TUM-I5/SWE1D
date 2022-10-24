@@ -85,6 +85,7 @@ find_package(Threads REQUIRED)
 
 enable_testing()
 add_subdirectory(Source)
+add_subdirectory(Tests)
 
 display_separator("Project Configuration Summary")
 
