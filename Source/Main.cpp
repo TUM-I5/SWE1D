@@ -35,6 +35,7 @@
  */
 
 #include <cstring>
+#include <fenv.h>
 
 #include "Blocks/WavePropagationBlock.hpp"
 #include "Scenarios/DamBreakScenario.hpp"
@@ -45,6 +46,9 @@
 #include "Writers/VTKWriter.hpp"
 
 int main(int argc, char** argv) {
+  // Triggers signals on floating point errors, i.e. prohibits quiet NaNs and alike.
+  feenableexcept(FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW);
+
   // Parse command line parameters
   Tools::Args args(argc, argv);
 
