@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.20)
 
 if(EXISTS "${CMAKE_SOURCE_DIR}/.git")
     execute_process(
@@ -27,8 +27,8 @@ endif()
 
 set(META_PROJECT_NAME        "SWE1D")
 set(META_PROJECT_DESCRIPTION "An Education-Oriented Code for 1D Tsunami Simulation")
-set(META_AUTHOR_ORGANIZATION "Technische Universitaet Muenchen")
-set(META_AUTHOR_DOMAIN       "https://github.com/TUM-I5/NS-EOF")
+set(META_AUTHOR_ORGANIZATION "Chair of Scientific Computing, Department of Informatics, Technische Universitaet Muenchen")
+set(META_AUTHOR_DOMAIN       "http://www5.in.tum.de/SWE")
 set(META_VERSION_REVISION    "${GIT_COMMIT_HASH_SHORT}")
 set(META_GIT_BRANCH          "${GIT_BRANCH}")
 set(META_GIT_HASH            "${GIT_COMMIT_HASH}")
@@ -48,6 +48,7 @@ set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT ${META_PROJECT_NAME})
 
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
+set(OPT_WARNINGS_AS_ERRORS OFF CACHE BOOL "" FORCE)
 include(FetchContent)
 FetchContent_Declare(
     _project_options

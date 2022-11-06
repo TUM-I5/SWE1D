@@ -1,4 +1,4 @@
-find_package(catch2 REQUIRED)
+find_package(Catch2 REQUIRED)
 
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "*.cpp")
 foreach(file ${SOURCES})
