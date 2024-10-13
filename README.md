@@ -24,15 +24,25 @@ As build system configurator we use CMake. To compile the code execute the follo
 
 * Create a build directory: `mkdir build`. You can also choose any other name for your build directory.
 * Switch to this directory: `cd build`
-* Run CMake: `cmake ..` (this configures a `RelWithDebInfo` build, which is default. For a `Debug` build, run `cmake .. -DCMAKE_BUILD_TYPE=Debug`) and for a `Release` build, `cmake .. -DCMAKE_BUILD_TYPE=Release`. This is especially recommended in production and benchmark runs.
-* Run Make: `make` (or `make -j` to compile with multiple cores)
-* Run `make help` to see all available targets to build.
-* Some basic unit tests have been implemented (`make test`). Feel free to add your own test cases inside the `Tests` folder.
+* Run CMake: `cmake ..`
+* Run Make: `make` (or `make -j` to compile with multiple cores).
+* Run Tests: Some basic unit tests have been implemented (`make test`). Feel free to add your own test cases inside the `Tests` folder.
 
 ## Running a Simulation
 
-* Run the code in serial via `./SWE1D-Runner`
+* Run the code: `./SWE1D-Runner`
 * With `./SWE1D-Runner --help`, you can see additional command-line arguments you can pass.
+
+## Visualize the Results
+
+We use Paraview to visualize the results of the simulation. Make sure to update to a recent Paraview version (to avoid compatibility issues).
+In the build directory where you have executed the simulation you will find a few output files that have the extension .vtr and one output
+file that has the extension .vtp. The latter is the index file that combines all other files with an additional description (in our case the timestep).
+
+We are now interested in that index file. Open Paraview and read the .vtp file. If Paraview cannot automatically deduce the correct reader, choose
+the `PVD Reader` from the list.
+
+Now start with a `Plot Over Line` filter and let the animation run.
 
 ## Adding New Source Files
 
