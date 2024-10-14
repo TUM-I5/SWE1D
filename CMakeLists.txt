@@ -5,7 +5,7 @@ set(SWE_PROJECT_DESCRIPTION "An Education-Oriented Code for 1D Tsunami Simulatio
 set(SWE_AUTHOR_ORGANIZATION "Chair of Scientific Computing, Department of Informatics, Technische Universitaet Muenchen")
 set(SWE_AUTHOR_DOMAIN       "http://www5.in.tum.de/SWE")
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
 
 include(GetGitRevisionDescription)
 get_git_head_revision(GIT_BRANCH GIT_COMMIT_HASH)
